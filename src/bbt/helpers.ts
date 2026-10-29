@@ -6,6 +6,12 @@ export const defaultHeaders = {
   'User-Agent': 'obsidian/zotero',
   Accept: 'application/json',
   Connection: 'keep-alive',
+  // Zotero 9+ drops any local HTTP request that carries an Origin header
+  // (Obsidian always sends `Origin: app://obsidian.md`) unless the request
+  // declares itself as coming from a trusted local client. Without this
+  // header every Better BibTeX call gets an empty reply.
+  // See docs/decisions/0001-send-zotero-allowed-request-header.md
+  'Zotero-Allowed-Request': 'true',
 };
 
 export function getPort(database: Database, port?: string) {
